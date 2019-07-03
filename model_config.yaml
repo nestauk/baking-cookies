@@ -3,7 +3,7 @@ target: &target 'leadFunder' # Variable to predict
 data:  # make_dataset.py
     gtr:
         usecols: ['id', 'abstractText', *target]
-        nrows : !!null
+        nrows : 1000
         min_chars : 140
         min_length : 3
 
@@ -19,15 +19,17 @@ model:  # train_model.py
            'tfidf__max_df': [0.8, 0.9, 1.0],
            'tfidf__min_df': [1, 2, 3],
            'logr__C': [0.1, 1, 10, 100],
+           'logr__random_state': [1],
            }
     cv: 3
     verbose: 5
-    n_jobs: 3
+    n_jobs: 1
   best:
     param_grid: {
            'tfidf__max_df': [0.8],
            'tfidf__min_df': [1],
            'logr__C': [100],
+           'logr__random_state': [1],
            }
     cv: 3
     verbose: 5
