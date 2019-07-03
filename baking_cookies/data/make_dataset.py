@@ -1,37 +1,44 @@
 # -*- coding: utf-8 -*-
 import click
+import os
 import logging
 from dotenv import find_dotenv, load_dotenv
-# Important to import the module
-# This configures logging, file-paths, model config variables
 import baking_cookies
+import pandas as pd
+from baking_cookies.data.gtr import make_gtr
+from baking_cookies.data.sql import get_engine
 
+
+logger = logging.getLogger(__name__)
 
 @click.command()
-@click.argument('arg', type=str)
-@click.option('-o', '--opt', default=None, type=int)
-def main(arg, opt):
+@click.option('--first-time/--not-first-time', default=False)
+def main(first_time):
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
 
-    Usage: `python make_dataset.py arg -o opt`
+    Usage: `python make_dataset.py --first-time`
 
     Args:
-        arg (str):
-            Required command line argument.
-        opt (int, optional):
-            Command line option.
-            Set with `-o` or `--opt`.
-            Defaults to None.
+        first_time (bool, optional):
+            If True, fetches files from mysql and saves to `data/raw`
+            Defaults to False.
     """
-    logger = logging.getLogger(__name__)
+    config = baking_cookies.config
 
-    try:
-        msg = f'making final data set from raw data with: arg={arg}; opt={opt}'
-        logger.info(msg)
-    except (Exception, KeyboardInterrupt) as e:
-        logger.exception('make_dataset ({arg}, {opt}) failed', stack_info=True)
-        raise e
+    if first_time:
+        fout_gtr_projects = f"{project_dir}/data/raw/gtr_projects.csv"
+        logger.info('Fetching raw data from MySQL')
+        engine = get_engine(os.getenv('sql_config_path'))
+        projects = pd.read_sql_table('gtr_projects', engine)
+        projects.to_csv(fout_gtr_projects, index=False)
+        logger.info(f'Fetched and saved raw data from MySQL to {fout_gtr_projects}')
+
+    logger.info('Making gtr dataset')
+    make_gtr(project_dir / 'data',
+             config['data']['gtr']['usecols'],
+             config['data']['gtr']['nrows'],
+             config['data']['gtr']['min_length'])
 
 
 if __name__ == '__main__':
@@ -42,4 +49,8 @@ if __name__ == '__main__':
     # load up the .env entries as environment variables
     load_dotenv(find_dotenv())
 
-    main()
+    try:
+        main()
+    except (Exception, KeyboardInterrupt) as e:
+        logger.exception(e, stack_info=True)
+        raise e
