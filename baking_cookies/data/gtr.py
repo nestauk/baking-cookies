@@ -36,12 +36,14 @@ def make_gtr(data_dir, usecols, nrows, min_chars, min_length):
     logger.info(f'Produced gateway to research data: {fout}')
 
 
-def process_gtr(gtr_df, abstract_texts_drop, min_length):
+def process_gtr(gtr_df, abstract_texts_drop, min_chars, min_length):
     """
 
     Args:
         gtr_df (pandas.DataFrame): Gateway to research data
         abstract_texts_drop (list[str]): List of abstract texts to be dropped
+        min_chars (int): minimum number of characters required for
+            a "valid" abstract.
         min_length (int): Minimum token length
 
     Returns:
@@ -102,3 +104,19 @@ def transform_gtr(gtr_df, min_length):
             .join(processed)
             .dropna()
             )
+
+
+if __name__ == '__main__':
+    project_dir = baking_cookies.project_dir
+    config = baking_cookies.config
+    logger.info('Making gtr dataset')
+
+    try:
+        make_gtr(project_dir / 'data',
+                 config['data']['gtr']['usecols'],
+                 config['data']['gtr']['nrows'],
+                 config['data']['gtr']['min_chars'],
+                 config['data']['gtr']['min_length'])
+    except (Exception, KeyboardInterrupt) as e:
+        logger.exception(e, stack_info=True)
+        raise e
