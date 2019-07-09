@@ -4,6 +4,7 @@ data:  # make_dataset.py
     gtr:
         usecols: ['id', 'abstractText', *target]
         nrows : !!null
+        min_chars : 140
         min_length : 3
 
 split:  # train_test_split.py

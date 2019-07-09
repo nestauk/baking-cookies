@@ -39,6 +39,7 @@ def main(first_time):
     make_gtr(project_dir / 'data',
              config['data']['gtr']['usecols'],
              config['data']['gtr']['nrows'],
+             config['data']['gtr']['min_chars'],
              config['data']['gtr']['min_length'])
 
 
