@@ -9,6 +9,7 @@ from joblib import load
 from sklearn.metrics import accuracy_score, classification_report
 from yellowbrick.classifier import ConfusionMatrix, ClassificationReport
 import baking_cookies
+from baking_cookies.models.train_model import _identity
 
 logger = logging.getLogger(__name__)
 
@@ -57,8 +58,7 @@ def make_evaluate(project_dir):
     fig, ax = subplots()
     cm = ConfusionMatrix(clf, ax=ax)
     cm.score(x_test, y_test)
-    cm.poof()
-    fig.savefig(confusion_fout, dpi=300)
+    cm.poof(outpath=confusion_fout)
 
 
 if __name__ == '__main__':
