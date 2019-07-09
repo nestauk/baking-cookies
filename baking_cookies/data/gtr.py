@@ -30,13 +30,30 @@ def make_gtr(data_dir, usecols, nrows, min_chars, min_length):
     logger.info(msg)
 
     (read_csv(fin, nrows=nrows, usecols=usecols)
-     .pipe(clean_gtr, abstract_texts_drop, min_chars)  # Clean
-     .pipe(transform_gtr, min_length)  # Tokenise
+     .pipe(process_gtr, abstract_texts_drop, min_chars, min_length)
      .to_csv(fout)  # Save
      )
     logger.info(f'Produced gateway to research data: {fout}')
 
 
+def process_gtr(gtr_df, abstract_texts_drop, min_length):
+    """
+
+    Args:
+        gtr_df (pandas.DataFrame): Gateway to research data
+        abstract_texts_drop (list[str]): List of abstract texts to be dropped
+        min_length (int): Minimum token length
+
+    Returns:
+        pandas.DataFrame
+    """
+
+    return (gtr_df
+            .pipe(clean_gtr, abstract_texts_drop, min_chars)  # Clean
+            .pipe(transform_gtr, min_length)  # Tokenise
+            )
+  
+  
 def clean_gtr(gtr_df, abstract_texts_drop, min_chars):
     """Remove duplicate id's and missing values
 
