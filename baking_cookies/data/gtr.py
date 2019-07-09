@@ -6,7 +6,7 @@ from baking_cookies.features.text_preprocessing import tokenize_document
 logger = logging.getLogger(__name__)
 
 
-def make_gtr(data_dir, usecols, nrows, min_length):
+def make_gtr(data_dir, usecols, nrows, min_chars, min_length):
     """Clean and tokenise gateway to research abstract texts
 
 
@@ -14,8 +14,9 @@ def make_gtr(data_dir, usecols, nrows, min_length):
         data_dir (str): data directory
         usecols (list[str]): Columns to keep
         nrows (int): number of rows to use
+        min_chars (int): minimum number of characters required for
+            a "valid" abstract.
         min_length (int): Minimum token length
-
     """
 
     fin = f"{data_dir}/raw/gtr_projects.csv"
@@ -29,7 +30,7 @@ def make_gtr(data_dir, usecols, nrows, min_length):
     logger.info(msg)
 
     (read_csv(fin, nrows=nrows, usecols=usecols)
-     .pipe(process_gtr, abstract_texts_drop, min_length)
+     .pipe(process_gtr, abstract_texts_drop, min_chars, min_length)
      .to_csv(fout)  # Save
      )
     logger.info(f'Produced gateway to research data: {fout}')
@@ -48,16 +49,18 @@ def process_gtr(gtr_df, abstract_texts_drop, min_length):
     """
 
     return (gtr_df
-            .pipe(clean_gtr, abstract_texts_drop)  # Clean
+            .pipe(clean_gtr, abstract_texts_drop, min_chars)  # Clean
             .pipe(transform_gtr, min_length)  # Tokenise
             )
-
-
-def clean_gtr(gtr_df, abstract_texts_drop):
+  
+  
+def clean_gtr(gtr_df, abstract_texts_drop, min_chars):
     """Remove duplicate id's and missing values
 
     Args:
         gtr_df (pandas.DataFrame): Gateway to research data
+        min_chars (int): Minimum number of characters required for
+            a "valid" abstract.
 
     Returns:
         pandas.DataFrame
@@ -67,7 +70,7 @@ def clean_gtr(gtr_df, abstract_texts_drop):
             [['id', 'abstractText', 'leadFunder']]
             .drop_duplicates('id')
             .drop_duplicates('abstractText')
-            .pipe(lambda x: x[x['abstractText'].str.len() > 100])
+            .pipe(lambda x: x[x['abstractText'].str.len() > min_chars])
             .pipe(lambda x: x[~x['abstractText'].isin(abstract_texts_drop)])
             .dropna()
             )
