@@ -24,6 +24,7 @@ def main(first_time):
             If True, fetches files from mysql and saves to `data/raw`
             Defaults to False.
     """
+    project_dir = baking_cookies.project_dir
     config = baking_cookies.config
 
     if first_time:
@@ -42,8 +43,6 @@ def main(first_time):
 
 
 if __name__ == '__main__':
-    # not used in this stub but often useful for finding various files
-    project_dir = baking_cookies.project_dir
 
     # find .env automagically by walking up directories until it's found, then
     # load up the .env entries as environment variables
