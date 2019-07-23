@@ -1,3 +1,5 @@
+notebooks/dev
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -88,6 +90,8 @@ target/
 # vim
 *.swp
 *.swo
+*~
+*.vim
 
 # Mypy cache
 .mypy_cache/
