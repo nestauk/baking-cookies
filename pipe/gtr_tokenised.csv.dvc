@@ -1,8 +1,8 @@
-md5: 6545900ea179a14f9acf1e6090040395
+md5: 75cc01271b66acb5c51b9d23b397980d
 cmd: python baking_cookies/data/gtr.py
 wdir: ..
 deps:
-- md5: cb7f26243081c508d71c2a1b7e1cfc97
+- md5: ad476e0b7b350fa14c594e5a23e17056
   path: model_config.yaml
 - md5: f5c1443e275ad5701ac630af8eeb6ede
   path: data/raw/gtr_projects.csv
@@ -13,7 +13,7 @@ deps:
 - md5: 3f6f7389173deba6c9567075a264d1c4
   path: baking_cookies/features/text_preprocessing.py
 outs:
-- md5: 13feb5d310f223e5597d4609693af467
+- md5: 1e3d60b688f1c1d586cdc1f9621a0a8c
   path: data/processed/gtr_tokenised.csv
   cache: true
   metric: false

@@ -1,24 +1,24 @@
-md5: 6ce612b4358819299d3672f87671b3ef
+md5: 708561f09673b494ba602a87622af6c3
 cmd: python baking_cookies/models/evaluate.py
 wdir: ..
 deps:
-- md5: cb7f26243081c508d71c2a1b7e1cfc97
+- md5: ad476e0b7b350fa14c594e5a23e17056
   path: model_config.yaml
-- md5: 13feb5d310f223e5597d4609693af467
+- md5: 1e3d60b688f1c1d586cdc1f9621a0a8c
   path: data/processed/gtr_tokenised.csv
-- md5: fc62d05e70792a57a5279c08c25efe5f
+- md5: f77d7a916162d5d200343f6ff551dadd
   path: data/processed/gtr_leadFunder_id_test.csv
-- md5: 631b19a0ef69104ecc5d5e9afab0e945
+- md5: 661680b460c5cec34ffc8caf38aa5d30
   path: models/gtr_leadFunder.pkl
 - md5: 9a2a5bd99903ce92df7c74cb4f1ada5c
   path: baking_cookies/models/evaluate.py
 outs:
-- md5: b3c5c37326c8cacc6585258f0147f9b5
+- md5: 7a7baa671e9fe2a047fd5bfd63f819b4
   path: reports/figures/gtr_leadFunder_confusion_matrix.png
   cache: true
   metric: false
   persist: false
-- md5: bd700842435026225851ffa1549c05f0
+- md5: 70a310d8db66e51bbf305f59eb0a9aae
   path: models/metrics.json
   cache: false
   metric: true

@@ -1,17 +1,17 @@
-md5: c8da46a8be95fd8c6f537155ac04435c
+md5: ceef068e502d12b6dcc2d4f4983f83ae
 cmd: python baking_cookies/models/train_model.py
 wdir: ..
 deps:
-- md5: cb7f26243081c508d71c2a1b7e1cfc97
+- md5: ad476e0b7b350fa14c594e5a23e17056
   path: model_config.yaml
-- md5: 13feb5d310f223e5597d4609693af467
+- md5: 1e3d60b688f1c1d586cdc1f9621a0a8c
   path: data/processed/gtr_tokenised.csv
-- md5: e19cf0e2882bbd52cc234ab2231bd7fe
+- md5: 2bb80b0750824958855015af5ef834e9
   path: data/processed/gtr_leadFunder_id_train.csv
 - md5: a1460142408368026e412976afa25b14
   path: baking_cookies/models/train_model.py
 outs:
-- md5: 631b19a0ef69104ecc5d5e9afab0e945
+- md5: 661680b460c5cec34ffc8caf38aa5d30
   path: models/gtr_leadFunder.pkl
   cache: true
   metric: false
