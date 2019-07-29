@@ -3,7 +3,7 @@ target: &target 'leadFunder' # Variable to predict
 data:  # make_dataset.py
     gtr:
         usecols: ['id', 'abstractText', *target]
-        nrows : 1000
+        nrows : !!null
         min_chars : 140
         min_length : 3
 
