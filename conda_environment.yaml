@@ -6,7 +6,7 @@ dependencies:
   - python=3.7
   - jq
   - pip=19.2.1=py37_0
-  - sqlite=3.29.0=hcee41ef_0
+  - sqlite=3.29.0
   - pip:
     - awscli==1.16.135
     - dvc==0.52.1
