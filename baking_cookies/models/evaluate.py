@@ -3,7 +3,7 @@ import ast
 import yaml
 import json
 from pathlib import Path
-import matploblib
+import matplotlib
 from matplotlib.pyplot import subplots
 from pandas import read_csv
 from joblib import load
