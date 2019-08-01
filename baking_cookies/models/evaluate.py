@@ -4,6 +4,7 @@ import yaml
 import json
 from pathlib import Path
 import matplotlib
+matplotlib.use('Agg')
 from matplotlib.pyplot import subplots
 from pandas import read_csv
 from joblib import load
@@ -63,7 +64,6 @@ def make_evaluate(project_dir):
 
 
 if __name__ == '__main__':
-    matplotlib.use('Agg')
     try:
         make_evaluate(baking_cookies.project_dir)
     except (Exception, KeyboardInterrupt) as e:
