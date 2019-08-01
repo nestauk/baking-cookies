@@ -1,0 +1,25 @@
+md5: 9c7a869f7bb7f06a3c2483f95c0f230e
+cmd: python baking_cookies/models/evaluate.py
+wdir: ..
+deps:
+- md5: cb7f26243081c508d71c2a1b7e1cfc97
+  path: model_config.yaml
+- md5: 13feb5d310f223e5597d4609693af467
+  path: data/processed/gtr_tokenised.csv
+- md5: fc62d05e70792a57a5279c08c25efe5f
+  path: data/processed/gtr_leadFunder_id_test.csv
+- md5: 613aa8b22da96dde56c9b89253503367
+  path: models/gtr_leadFunder.pkl
+- md5: 9a2a5bd99903ce92df7c74cb4f1ada5c
+  path: baking_cookies/models/evaluate.py
+outs:
+- md5: b3c5c37326c8cacc6585258f0147f9b5
+  path: reports/figures/gtr_leadFunder_confusion_matrix.png
+  cache: true
+  metric: false
+  persist: false
+- md5: bd700842435026225851ffa1549c05f0
+  path: models/metrics.json
+  cache: false
+  metric: true
+  persist: false

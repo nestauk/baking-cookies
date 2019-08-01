@@ -3,6 +3,8 @@ import ast
 import yaml
 import json
 from pathlib import Path
+import matplotlib
+matplotlib.use('Agg')
 from matplotlib.pyplot import subplots
 from pandas import read_csv
 from joblib import load

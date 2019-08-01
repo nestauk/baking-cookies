@@ -7,7 +7,7 @@ from pandas import read_csv
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV, KFold
 import baking_cookies
 
 logger = logging.getLogger(__name__)
@@ -28,13 +28,6 @@ def make_train_model(project_dir, grid_search=False):
     train_id_fin = f"{project_dir}/data/processed/gtr_leadFunder_id_train.csv"
     model_fout = f"{project_dir}/models/gtr_{target}.pkl"
 
-    # Move params into config:
-    params = {
-              'tfidf__max_df': [0.8, 0.9, 1.0],
-              'tdidf_min_df': [1, 2, 3],
-              'logr__C': [0.1, 1, 10, 100],
-              }
-
     if grid_search:
         grid_search_kws = baking_cookies.config['model']['grid']
     else:
@@ -49,7 +42,7 @@ def make_train_model(project_dir, grid_search=False):
              .pipe(lambda x: process_train_model(
                    x['processed_documents'],  # Features
                    x[target],  # Target
-                   grid_search_kws
+                   grid_search_kws,
                    ))
              )
 
@@ -82,6 +75,19 @@ def process_train_model(x_train, y_train, grid_search_kws):
 
 
     pipe = Pipeline(estimators)
+
+    if 'random_state' in grid_search_kws:
+        random_state = grid_search_kws['random_state']
+    else:
+        random_state = 0
+
+    if 'cv' in grid_search_kws:
+        n_splits = grid_search_kws['cv']
+    else:
+        n_splits = 3
+
+    grid_search_kws['cv'] = KFold(n_splits=n_splits,
+            random_state=random_state)
 
     clf = GridSearchCV(pipe, **grid_search_kws)
 
