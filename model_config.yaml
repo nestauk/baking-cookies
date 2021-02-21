@@ -7,6 +7,17 @@ data:  # make_dataset.py
         min_chars : 140
         min_length : 3
 
+features:  # build_features.py
+  w2v:
+  # Passed to gensim.models.Word2Vec
+  # See: https://radimrehurek.com/gensim/models/word2vec.html
+    workers: 1
+    size: 50
+    window: 10
+    min_count: 2
+    iter: 20
+    seed: 1
+
 split:  # train_test_split.py
   random_state: 0
   shuffle: True
